@@ -1,4 +1,4 @@
-package main.scala.nyctaxi
+package nyctaxi
 
 case class TripData(
 

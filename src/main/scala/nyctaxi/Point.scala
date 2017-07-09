@@ -1,4 +1,4 @@
-package main.scala.nyctaxi
+package nyctaxi
 
 /**
   * Created by evgeny on 7/6/17.
