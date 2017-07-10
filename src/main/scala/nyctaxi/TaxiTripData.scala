@@ -33,13 +33,7 @@ case class TaxiTripData(
                        var vendorID : Integer,
 
                        @BeanProperty
-                       var tpepPickupDatetimeString : String,
-
-                       @BeanProperty
                        var tpepPickupDatetime : Date,
-
-                       @BeanProperty
-                       var tpepDropoffDatetimeString : String,
 
                        @BeanProperty
                        var tpepDropoffDatetime : Date,
@@ -55,17 +49,5 @@ case class TaxiTripData(
                        var pickupLocation: org.openspaces.spatial.shapes.Point
                      ) {
 
-  println(">>>tpep_dropoff_datetimeString=" + tpepDropoffDatetimeString)
-  val dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-  if (tpepPickupDatetimeString != null) {
-    tpepPickupDatetime = dateTimeFormat.parse(tpepPickupDatetimeString)
-//    println(">>>Formatted tpepPickupDatetimeString=" + dateTimeFormat.parse(tpepPickupDatetimeString))
-  }
-  if (tpepDropoffDatetimeString != null) {
-    tpepDropoffDatetime= dateTimeFormat.parse(tpepDropoffDatetimeString)
-//    println(">>>Formatted tpep_dropoff_datetimeString=" + dateTimeFormat.parse(tpepDropoffDatetimeString))
-  }
-
-
-  def this() = this(null, null, null, null, null, null, -1, -1, null)
+  def this() = this(null, null, null, null, -1, -1, null)
 }

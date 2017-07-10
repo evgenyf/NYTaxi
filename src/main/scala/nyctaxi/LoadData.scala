@@ -1,9 +1,8 @@
 package nyctaxi
 
-import java.time.{DayOfWeek, LocalDate}
 import java.text.SimpleDateFormat
 
-import org.apache.spark.sql.{Column, SaveMode, SparkSession}
+import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.insightedge.spark.context.InsightEdgeConfig
 import org.insightedge.spark.implicits.all._
