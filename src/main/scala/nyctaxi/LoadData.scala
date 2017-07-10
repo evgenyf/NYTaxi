@@ -1,8 +1,9 @@
 package nyctaxi
 
+import java.time.{DayOfWeek, LocalDate}
 import java.text.SimpleDateFormat
 
-import org.apache.spark.sql.{SaveMode, SparkSession}
+import org.apache.spark.sql.{Column, SaveMode, SparkSession}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.insightedge.spark.context.InsightEdgeConfig
 import org.insightedge.spark.implicits.all._
@@ -53,9 +54,9 @@ object LoadData {
 
     val df = sparkSession.read.option("header","true").csv(path)
 
-    val filteredDf = df.select( "VendorID",
-      "tpep_pickup_datetime",
-      "tpep_dropoff_datetime",
+    val filteredDf = df.select( "vendor_id",
+      "pickup_datetime",
+      "dropoff_datetime",
       "passenger_count",
       "trip_distance",
       "pickup_longitude",
@@ -64,13 +65,8 @@ object LoadData {
         df("dropoff_longitude") >= ( goldmanSacksLocation.longitude - locationPrecision ) &&
           df("dropoff_longitude") <= ( goldmanSacksLocation.longitude + locationPrecision ) &&
           df("dropoff_latitude") >= ( goldmanSacksLocation.latitude - locationPrecision ) &&
-          df("dropoff_latitude") <= ( goldmanSacksLocation.latitude + locationPrecision )
-        /*TODO add filtering according to working days only*/
-        /*df( "tpep_dropoff_datetime" )......*/ )
-
-    /*
-
-    * */
+          df("dropoff_latitude") <= ( goldmanSacksLocation.latitude + locationPrecision ))
+      .filter(d=>isWeekday(d.getAs[String]("pickup_datetime")))
 
     val taxiTripsRdd = filteredDf.rdd.map( row => new TaxiTripData(
       id = null,
@@ -119,5 +115,18 @@ object LoadData {
     sparkSession.stopInsightEdgeContext()
 
     println( "DataFrame load took " + ( endTime - startTime ) + " msec." )
+  }
+
+  def isWeekday(string:String):Boolean = {
+    val dateFormat = new java.text.SimpleDateFormat("dd-MM-yyyy")
+    val dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+    val day=LocalDate.parse(string,dateTimeFormat).getDayOfWeek()
+
+    if (day.compareTo(DayOfWeek.SATURDAY)==1) return false
+
+    if (day.compareTo(DayOfWeek.SUNDAY)==1) return false
+
+    return true
   }
 }
