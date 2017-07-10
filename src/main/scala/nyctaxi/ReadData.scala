@@ -47,6 +47,13 @@ object ReadData {
 
     val startTime = System.currentTimeMillis()
 
+    /*TODO:
+    // 1. query that will bring us areas with maximum passenger_count
+    // 2. query for finding few hours with maximum dropoffs
+    // 3.
+    */
+
+
     val taxiTripData = sparkSession.read.grid[TaxiTripData]
 
     val pickupsFromBrooklyn = taxiTripData.filter(taxiTripData("pickupLocation") geoWithin brooklynPoligom)
