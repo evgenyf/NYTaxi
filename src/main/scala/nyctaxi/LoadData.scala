@@ -54,9 +54,9 @@ object LoadData {
 
     val df = sparkSession.read.option("header","true").csv(path)
 
-    val filteredDf = df.select( "vendor_id",
-      "pickup_datetime",
-      "dropoff_datetime",
+    val filteredDf = df.select( "VendorID",
+      "tpep_pickup_datetime",
+      "tpep_dropoff_datetime",
       "passenger_count",
       "trip_distance",
       "pickup_longitude",
@@ -66,16 +66,13 @@ object LoadData {
           df("dropoff_longitude") <= ( goldmanSacksLocation.longitude + locationPrecision ) &&
           df("dropoff_latitude") >= ( goldmanSacksLocation.latitude - locationPrecision ) &&
           df("dropoff_latitude") <= ( goldmanSacksLocation.latitude + locationPrecision ))
-      .filter(d=>isWeekday(d.getAs[String]("pickup_datetime")))
+      .filter(d=>isWeekday(d.getAs[String]("tpep_pickup_datetime")))
 
     val taxiTripsRdd = filteredDf.rdd.map( row => new TaxiTripData(
       id = null,
       row.getAs[String]("VendorID").toInt,
       row.getAs[String]("tpep_pickup_datetime"),
       null,
-      //      if( row.getAs[String]("tpep_pickup_datetime").trim.isEmpty ) null else dateTimeFormat.parse( row.getAs[String]("tpep_pickup_datetime") ),
-      //if( row.getAs[String]("tpep_dropoff_datetime").trim.isEmpty ) null else dateTimeFormat.parse( row.getAs[String]("tpep_dropoff_datetime") ),
-      //if( row.getAs[String]("tpep_dropoff_datetime").trim.isEmpty ) null else dateTimeFormat.parse( row.getAs[String]("tpep_dropoff_datetime") ),
       row.getAs[String]("tpep_dropoff_datetime"),
       null,
       row.getAs[String]("passenger_count").toInt,
