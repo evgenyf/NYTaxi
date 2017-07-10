@@ -1,8 +1,10 @@
 package nyctaxi
 
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.time.{DayOfWeek, LocalDate}
 
-import org.apache.spark.sql.{SaveMode, SparkSession}
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.{SparkConf, SparkContext}
 import org.insightedge.spark.context.InsightEdgeConfig
 import org.insightedge.spark.implicits.all._
@@ -14,7 +16,7 @@ import org.openspaces.spatial.ShapeFactory
 object LoadData {
 
   val goldmanSacksLocation = new Point( -74.013961, 40.714672 )
-  val dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+  val dateTimePattern = "yyyy-MM-dd HH:mm:ss"
   val locationPrecision = 0.001 // about 100 meters
 
   //first parameter is link to csv file
@@ -70,10 +72,8 @@ object LoadData {
     val taxiTripsRdd = filteredDf.rdd.map( row => new TaxiTripData(
       id = null,
       row.getAs[String]("VendorID").toInt,
-      row.getAs[String]("tpep_pickup_datetime"),
-      null,
-      row.getAs[String]("tpep_dropoff_datetime"),
-      null,
+      new SimpleDateFormat(dateTimePattern).parse( row.getAs[String]("tpep_pickup_datetime") ),
+      new SimpleDateFormat(dateTimePattern).parse( row.getAs[String]("tpep_dropoff_datetime") ),
       row.getAs[String]("passenger_count").toInt,
       row.getAs[String]("trip_distance").toDouble,
       ShapeFactory.point(
@@ -114,8 +114,8 @@ object LoadData {
   }
 
   def isWeekday(string:String):Boolean = {
-    val dateFormat = new java.text.SimpleDateFormat("dd-MM-yyyy")
-    val dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+    val dateTimeFormat = DateTimeFormatter.ofPattern( dateTimePattern )
 
     val day=LocalDate.parse(string,dateTimeFormat).getDayOfWeek()
 

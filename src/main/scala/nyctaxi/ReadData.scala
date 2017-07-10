@@ -47,13 +47,15 @@ object ReadData {
 
     val startTime = System.currentTimeMillis()
 
-    val df = sparkSession.read.grid("nytaxi")
-    val pickupsFromBrooklyn = df//.filter( df("location") /* will not wotk since ther is no class and not such field */ geoWithin brooklynPoligom )
+    val taxiTripData = sparkSession.read.grid[TaxiTripData]
 
-//    println( "Count:" + pickupsFromBrooklyn.count() )
+    val pickupsFromBrooklyn = taxiTripData.filter(taxiTripData("pickupLocation") geoWithin brooklynPoligom)
+    val pickupsFromBrooklynCount = pickupsFromBrooklyn.count()
 
     pickupsFromBrooklyn.printSchema()
     pickupsFromBrooklyn.show()
+
+    println( ">> pickupsFromBrooklynCount=" + pickupsFromBrooklynCount )
 
     val endTime = System.currentTimeMillis()
 
