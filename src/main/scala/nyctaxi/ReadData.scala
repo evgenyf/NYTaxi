@@ -1,12 +1,15 @@
 package nyctaxi
 
 import java.time.format.DateTimeFormatter
+import java.util
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.{SparkConf, SparkContext}
 import org.insightedge.spark.context.InsightEdgeConfig
 import org.insightedge.spark.implicits.all._
 import org.openspaces.spatial.ShapeFactory
+
+import scala.collection.JavaConversions._
 
 /**
   * Created by evgeny on 7/5/17.
@@ -43,8 +46,6 @@ object ReadData {
       .insightEdgeConfig(ieConfig)
       .getOrCreate()
 
-    val time1 = System.currentTimeMillis()
-
     val startTime = System.currentTimeMillis()
 
     /*TODO:
@@ -53,16 +54,45 @@ object ReadData {
     // 3.
     */
 
+    val taxiTripDataDf = sparkSession.read.grid[TaxiTripData]
 
-    val taxiTripData = sparkSession.read.grid[TaxiTripData]
+    val grouppedByDropoffHour = taxiTripDataDf.select("dropoffHour").groupBy( "dropoffHour" )
 
-    val pickupsFromBrooklyn = taxiTripData.filter(taxiTripData("pickupLocation") geoWithin brooklynPoligom)
+    val grouppedCountDf = grouppedByDropoffHour.count().sort( "count" )
+    grouppedCountDf.show(25)
+
+    val l = grouppedCountDf.collectAsList()
+
+    //take list of 3 Row objects with maximum count
+    val maxCountRows = l.subList( l.size() - 3, l.size() )
+
+    var drooOffHoursWithMaxCounts = new util.ArrayList[Integer]()
+
+    for(x <- maxCountRows) drooOffHoursWithMaxCounts.add( x.getAs[Integer]("dropoffHour") )
+
+    println( "maxCountRows :" + maxCountRows )
+    println( "drooOffHoursWithMaxCounts :" + drooOffHoursWithMaxCounts )
+
+    //////////=========================pickups taken from Broklyn==========================
+    val pickupsFromBrooklyn = taxiTripDataDf.filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom)
     val pickupsFromBrooklynCount = pickupsFromBrooklyn.count()
 
     pickupsFromBrooklyn.printSchema()
     pickupsFromBrooklyn.show()
 
     println( ">> pickupsFromBrooklynCount=" + pickupsFromBrooklynCount )
+    //////////===================================================
+
+    //////////~~~~~~~~~~~~~~~~~~~~pickups taken from Broklyn at 3 most busy  hours~~~~~~~~~
+    val pickupsFromBrooklynAtRushHour = taxiTripDataDf.
+            filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom).
+            filter(taxiTripDataDf("dropoffHour").isin( drooOffHoursWithMaxCounts:_* ))
+    val pickupsFromBrooklynAtRushHourCount = pickupsFromBrooklynAtRushHour.count()
+
+    pickupsFromBrooklynAtRushHour.show(50)
+
+    println( ">> pickupsFromBrooklynAtRushHourCount=" + pickupsFromBrooklynAtRushHourCount )
+    //////////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     val endTime = System.currentTimeMillis()
 

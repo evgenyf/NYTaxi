@@ -16,10 +16,9 @@
 
 package nyctaxi
 
-import java.text.SimpleDateFormat
+import java.util.Date
 
 import org.insightedge.scala.annotation._
-import java.util.Date
 
 import scala.beans.BeanProperty
 
@@ -45,9 +44,12 @@ case class TaxiTripData(
                        var tripDistance : Double,
 
                        @BeanProperty
+                       var dropoffHour : Integer,
+
+                       @BeanProperty
                        @SpaceSpatialIndex
                        var pickupLocation: org.openspaces.spatial.shapes.Point
                      ) {
 
-  def this() = this(null, null, null, null, -1, -1, null)
+  def this() = this(null, null, null, null, -1, -1, -1, null)
 }

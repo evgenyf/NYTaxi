@@ -3,11 +3,13 @@ package nyctaxi
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.time.{DayOfWeek, LocalDate}
+import java.util.{Calendar, Date}
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.{SparkConf, SparkContext}
 import org.insightedge.spark.context.InsightEdgeConfig
 import org.insightedge.spark.implicits.all._
+import org.insightedge.spark.utils.GridProxyFactory
 import org.openspaces.spatial.ShapeFactory
 
 /**
@@ -18,6 +20,7 @@ object LoadData {
   val goldmanSacksLocation = new Point( -74.013961, 40.714672 )
   val dateTimePattern = "yyyy-MM-dd HH:mm:ss"
   val locationPrecision = 0.001 // about 100 meters
+  val c = Calendar.getInstance()
 
   //first parameter is link to csv file
   def main(args: Array[String]): Unit = {
@@ -76,6 +79,7 @@ object LoadData {
       new SimpleDateFormat(dateTimePattern).parse( row.getAs[String]("tpep_dropoff_datetime") ),
       row.getAs[String]("passenger_count").toInt,
       row.getAs[String]("trip_distance").toDouble,
+      getHour( new SimpleDateFormat(dateTimePattern).parse( row.getAs[String]("tpep_dropoff_datetime") ) ),
       ShapeFactory.point(
         row.getAs[String]("pickup_longitude").toDouble,
         row.getAs[String]("pickup_latitude").toDouble
@@ -84,7 +88,8 @@ object LoadData {
 
 
 
-
+      //clear existing data
+    GridProxyFactory.getOrCreateClustered(ieConfig).clear(null)
     taxiTripsRdd.saveToGrid()
 
 
@@ -113,10 +118,14 @@ object LoadData {
     println( "DataFrame load took " + ( endTime - startTime ) + " msec." )
   }
 
+  def getHour( date : Date ): Int ={
+    c.setTime(date)
+    c.get( Calendar.HOUR_OF_DAY )
+  }
+
   def isWeekday(string:String):Boolean = {
 
     val dateTimeFormat = DateTimeFormatter.ofPattern( dateTimePattern )
-
     val day=LocalDate.parse(string,dateTimeFormat).getDayOfWeek()
 
     if (day.compareTo(DayOfWeek.SATURDAY)==1) return false
