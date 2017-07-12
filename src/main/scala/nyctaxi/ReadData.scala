@@ -56,7 +56,7 @@ object ReadData {
 
     val taxiTripDataDf = sparkSession.read.grid[TaxiTripData]
 
-    //////////=========================pickups taken from Broklyn==========================
+    //////////=========================pickups taken from Brooklyn==========================
     val pickupsFromBrooklyn = taxiTripDataDf.filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom)
     val pickupsFromBrooklynCount = pickupsFromBrooklyn.count()
 
@@ -66,7 +66,7 @@ object ReadData {
     println( ">> pickupsFromBrooklynCount=" + pickupsFromBrooklynCount )
     //////////===================================================
 
-    //////////~~~~~~~~~~~~~~~~~~~~pickups taken from Broklyn at 3 most busy  hours~~~~~~~~~
+    //////////~~~~~~~~~~~~~~~~~~~~pickups taken from Brooklyn at 3 busy rush hours~~~~~~~~~
 
 
     val drooOffHoursWithMaxCounts = retrieveMostRushHours(taxiTripDataDf, 3)
@@ -105,4 +105,9 @@ object ReadData {
 
     drooOffHoursWithMaxCounts
   }
+
+  //TODO
+  //1. compare foot print of spark with space
+  //2. decrease number of selects in order to receive busy rush hour
+  //3. consider not to create new addiyional field in our TaxiTripData class for hour
 }
