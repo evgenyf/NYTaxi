@@ -3,7 +3,7 @@ package nyctaxi
 import java.time.format.DateTimeFormatter
 import java.util
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.insightedge.spark.context.InsightEdgeConfig
 import org.insightedge.spark.implicits.all._
@@ -56,23 +56,6 @@ object ReadData {
 
     val taxiTripDataDf = sparkSession.read.grid[TaxiTripData]
 
-    val grouppedByDropoffHour = taxiTripDataDf.select("dropoffHour").groupBy( "dropoffHour" )
-
-    val grouppedCountDf = grouppedByDropoffHour.count().sort( "count" )
-    grouppedCountDf.show(25)
-
-    val l = grouppedCountDf.collectAsList()
-
-    //take list of 3 Row objects with maximum count
-    val maxCountRows = l.subList( l.size() - 3, l.size() )
-
-    var drooOffHoursWithMaxCounts = new util.ArrayList[Integer]()
-
-    for(x <- maxCountRows) drooOffHoursWithMaxCounts.add( x.getAs[Integer]("dropoffHour") )
-
-    println( "maxCountRows :" + maxCountRows )
-    println( "drooOffHoursWithMaxCounts :" + drooOffHoursWithMaxCounts )
-
     //////////=========================pickups taken from Broklyn==========================
     val pickupsFromBrooklyn = taxiTripDataDf.filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom)
     val pickupsFromBrooklynCount = pickupsFromBrooklyn.count()
@@ -84,12 +67,16 @@ object ReadData {
     //////////===================================================
 
     //////////~~~~~~~~~~~~~~~~~~~~pickups taken from Broklyn at 3 most busy  hours~~~~~~~~~
+
+
+    val drooOffHoursWithMaxCounts = retrieveMostRushHours(taxiTripDataDf, 3)
     val pickupsFromBrooklynAtRushHour = taxiTripDataDf.
             filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom).
             filter(taxiTripDataDf("dropoffHour").isin( drooOffHoursWithMaxCounts:_* ))
+
     val pickupsFromBrooklynAtRushHourCount = pickupsFromBrooklynAtRushHour.count()
 
-    pickupsFromBrooklynAtRushHour.show(50)
+    //pickupsFromBrooklynAtRushHour.show(30)
 
     println( ">> pickupsFromBrooklynAtRushHourCount=" + pickupsFromBrooklynAtRushHourCount )
     //////////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -99,6 +86,23 @@ object ReadData {
     sparkSession.stopInsightEdgeContext()
 
     println( "DataFrame load took " + ( endTime - startTime ) + " msec." )
+  }
 
+  def retrieveMostRushHours( taxiTripDataDf : DataFrame, rushHoursCount: Integer ): util.ArrayList[Integer] ={
+    val grouppedByDropoffHours = taxiTripDataDf.select("dropoffHour").groupBy( "dropoffHour" )
+
+    val l = grouppedByDropoffHours.count().sort( "count" ).collectAsList()
+
+    //take list of [rushHoursCount] Row objects with maximum count ( most rush hours )
+    val maxCountRows = l.subList( l.size() - rushHoursCount, l.size() )
+
+    var drooOffHoursWithMaxCounts = new util.ArrayList[Integer]()
+
+    for(x <- maxCountRows) drooOffHoursWithMaxCounts.add( x.getAs[Integer]("dropoffHour") )
+
+    println( "maxCountRows :" + maxCountRows )
+    println( "drooOffHoursWithMaxCounts :" + drooOffHoursWithMaxCounts )
+
+    drooOffHoursWithMaxCounts
   }
 }

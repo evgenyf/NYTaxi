@@ -47,16 +47,15 @@ object LoadData {
       .getOrCreate()
 
     val time1 = System.currentTimeMillis()
-    val path = args(0)
+    val paths = args(0).split(",")
 
-    println( "Path:" + path )
-
-
-//    val parsedDate = dateTimeFormat.parse( "2016-04-07 16:39:04" )
+    println( "Paths:" + paths.mkString(", ") )
 
     val startTime = System.currentTimeMillis()
 
-    val df = sparkSession.read.option("header","true").csv(path)
+    val df = sparkSession.read.option("header","true").csv(paths: _*)
+
+    println( "Total count:" + df.count() )
 
     val filteredDf = df.select( "VendorID",
       "tpep_pickup_datetime",
@@ -86,30 +85,15 @@ object LoadData {
       )
     ) )
 
-
-
       //clear existing data
     GridProxyFactory.getOrCreateClustered(ieConfig).clear(null)
     taxiTripsRdd.saveToGrid()
-
-
-/*    import sparkSession.implicits._
-    val ds = filteredDf.map( row => new TaxiTripData( -1L, ShapeFactory.point( 1.1, 2.2 ).asInstanceOf[PointImpl] ) )
-    val taxiTripData = ds.collect()
-
-
-
-    println(s"Saving ${taxiTripData.size} trip data to the space")
-    sc.parallelize(taxiTripData).saveToGrid()*/
-
 
     df.printSchema()
 
     filteredDf.printSchema()
 
     filteredDf.show()
-
-//    filteredDf.write.mode(SaveMode.Overwrite).grid("nytaxi1")
 
     val endTime = System.currentTimeMillis()
 
