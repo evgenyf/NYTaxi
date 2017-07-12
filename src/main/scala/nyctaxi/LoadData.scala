@@ -78,6 +78,7 @@ object LoadData {
       new SimpleDateFormat(dateTimePattern).parse( row.getAs[String]("tpep_dropoff_datetime") ),
       row.getAs[String]("passenger_count").toInt,
       row.getAs[String]("trip_distance").toDouble,
+      //added new hour column
       getHour( new SimpleDateFormat(dateTimePattern).parse( row.getAs[String]("tpep_dropoff_datetime") ) ),
       ShapeFactory.point(
         row.getAs[String]("pickup_longitude").toDouble,
@@ -86,6 +87,7 @@ object LoadData {
     ) )
 
       //clear existing data
+    //TODO ! expose indication for clearing space before writing
     GridProxyFactory.getOrCreateClustered(ieConfig).clear(null)
     taxiTripsRdd.saveToGrid()
 
