@@ -2,6 +2,7 @@ package nyctaxi
 
 import java.time.format.DateTimeFormatter
 import java.util
+import java.util.{Calendar, Date}
 
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.{SparkConf, SparkContext}
@@ -26,6 +27,8 @@ object ReadData {
           ShapeFactory.point(-73.8330410090778,40.7391279531343),
           ShapeFactory.point(-73.8330410090778,40.5695299944867),
           ShapeFactory.point(-74.0418951311803,40.5695299944867))
+
+  val c = Calendar.getInstance()
 
   //first parameter is link to csv file
   def main(args: Array[String]): Unit = {
@@ -59,27 +62,15 @@ object ReadData {
     //////////=========================pickups taken from Brooklyn==========================
     val pickupsFromBrooklyn = taxiTripDataDf.filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom)
     val pickupsFromBrooklynCount = pickupsFromBrooklyn.count()
+    //////////===============================================================================
 
-    pickupsFromBrooklyn.printSchema()
-    pickupsFromBrooklyn.show()
-
-    println( ">> pickupsFromBrooklynCount=" + pickupsFromBrooklynCount )
-    //////////===================================================
 
     //////////~~~~~~~~~~~~~~~~~~~~pickups taken from Brooklyn at 3 busy rush hours~~~~~~~~~
-
-
     val drooOffHoursWithMaxCounts = retrieveMostRushHours(taxiTripDataDf, 3)
     val pickupsFromBrooklynAtRushHour = taxiTripDataDf.
             filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom).
             filter(taxiTripDataDf("dropoffHour").isin( drooOffHoursWithMaxCounts:_* ))
-
-    val pickupsFromBrooklynAtRushHourCount = pickupsFromBrooklynAtRushHour.count()
-
-    //pickupsFromBrooklynAtRushHour.show(30)
-
-    println( ">> pickupsFromBrooklynAtRushHourCount=" + pickupsFromBrooklynAtRushHourCount )
-    //////////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //////////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     val endTime = System.currentTimeMillis()
 
@@ -89,9 +80,7 @@ object ReadData {
   }
 
   def retrieveMostRushHours( taxiTripDataDf : DataFrame, rushHoursCount: Integer ): util.ArrayList[Integer] ={
-    val grouppedByDropoffHours = taxiTripDataDf.select("dropoffHour").groupBy( "dropoffHour" )
-
-    val l = grouppedByDropoffHours.count().sort( "count" ).collectAsList()
+    val l = taxiTripDataDf.select("dropoffHour").groupBy( "dropoffHour" ).count().sort( "count" ).collectAsList()
 
     //take list of [rushHoursCount] Row objects with maximum count ( most rush hours )
     val maxCountRows = l.subList( l.size() - rushHoursCount, l.size() )
@@ -108,6 +97,6 @@ object ReadData {
 
   //TODO
   //1. compare foot print of spark with space
-  //2. decrease number of selects in order to receive busy rush hour
-  //3. consider not to create new addiyional field in our TaxiTripData class for hour
+  //2. decrease number of selects in order to receive most busy rush hour
+  //3. consider not to create new additional field in our TaxiTripData class for hour
 }
