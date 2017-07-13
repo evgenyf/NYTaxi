@@ -44,6 +44,7 @@ case class TaxiTripData(
                        var tripDistance : Double,
 
                        @BeanProperty
+                       @SpaceIndex
                        var dropoffHour : Integer,
 
                        @BeanProperty
