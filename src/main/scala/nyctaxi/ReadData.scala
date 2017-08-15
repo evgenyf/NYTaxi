@@ -60,8 +60,8 @@ object ReadData {
     val taxiTripDataDf = sparkSession.read.grid[TaxiTripData]
 
     //////////=========================pickups taken from Brooklyn==========================
-    val pickupsFromBrooklyn = taxiTripDataDf.filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom)
-    val pickupsFromBrooklynCount = pickupsFromBrooklyn.count()
+//    val pickupsFromBrooklyn = taxiTripDataDf.filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom)
+//    val pickupsFromBrooklynCount = pickupsFromBrooklyn.count()
     //////////===============================================================================
 
 
@@ -85,14 +85,14 @@ object ReadData {
     //take list of [rushHoursCount] Row objects with maximum count ( most rush hours )
     val maxCountRows = l.subList( l.size() - rushHoursCount, l.size() )
 
-    var drooOffHoursWithMaxCounts = new util.ArrayList[Integer]()
+    var dropOffHoursWithMaxCounts = new util.ArrayList[Integer]()
 
-    for(x <- maxCountRows) drooOffHoursWithMaxCounts.add( x.getAs[Integer]("dropoffHour") )
+    for(x <- maxCountRows) dropOffHoursWithMaxCounts.add( x.getAs[Integer]("dropoffHour") )
 
     println( "maxCountRows :" + maxCountRows )
-    println( "drooOffHoursWithMaxCounts :" + drooOffHoursWithMaxCounts )
+    println( "drooOffHoursWithMaxCounts :" + dropOffHoursWithMaxCounts )
 
-    drooOffHoursWithMaxCounts
+    dropOffHoursWithMaxCounts
   }
 
   //TODO

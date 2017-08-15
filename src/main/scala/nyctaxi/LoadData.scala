@@ -53,7 +53,7 @@ object LoadData {
 
     val startTime = System.currentTimeMillis()
 
-    val df = sparkSession.read.option("header","true").csv(paths: _*)
+    val df = sparkSession.read.option("header","true").csv(paths.toSeq: _*)
 
     println( "Total count:" + df.count() )
 
@@ -70,6 +70,8 @@ object LoadData {
           df("dropoff_latitude") >= ( goldmanSacksLocation.latitude - locationPrecision ) &&
           df("dropoff_latitude") <= ( goldmanSacksLocation.latitude + locationPrecision ))
       .filter(d=>isWeekday(d.getAs[String]("tpep_pickup_datetime")))
+
+//    println( "filteredDf count:" + filteredDf.count() )
 
     val taxiTripsRdd = filteredDf.rdd.map( row => new TaxiTripData(
       id = null,
@@ -91,11 +93,15 @@ object LoadData {
     GridProxyFactory.getOrCreateClustered(ieConfig).clear(null)
     taxiTripsRdd.saveToGrid()
 
+/*
     df.printSchema()
 
     filteredDf.printSchema()
 
     filteredDf.show()
+*/
+
+    println( "Rdd count=" + taxiTripsRdd.count() )
 
     val endTime = System.currentTimeMillis()
 
