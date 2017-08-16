@@ -66,10 +66,10 @@ object ReadData {
 
 
     //////////~~~~~~~~~~~~~~~~~~~~pickups taken from Brooklyn at 3 busy rush hours~~~~~~~~~
-    val drooOffHoursWithMaxCounts = retrieveMostRushHours(taxiTripDataDf, 3)
+    val dropOffHoursWithMaxCounts = retrieveMostRushHours(taxiTripDataDf, 3)
     val pickupsFromBrooklynAtRushHour = taxiTripDataDf.
             filter(taxiTripDataDf("pickupLocation") geoWithin brooklynPoligom).
-            filter(taxiTripDataDf("dropoffHour").isin( drooOffHoursWithMaxCounts:_* ))
+            filter(taxiTripDataDf("dropoffHour").isin( dropOffHoursWithMaxCounts:_* ))
     //////////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     val endTime = System.currentTimeMillis()
@@ -90,7 +90,7 @@ object ReadData {
     for(x <- maxCountRows) dropOffHoursWithMaxCounts.add( x.getAs[Integer]("dropoffHour") )
 
     println( "maxCountRows :" + maxCountRows )
-    println( "drooOffHoursWithMaxCounts :" + dropOffHoursWithMaxCounts )
+    println( "dropOffHoursWithMaxCounts :" + dropOffHoursWithMaxCounts )
 
     dropOffHoursWithMaxCounts
   }
