@@ -72,6 +72,10 @@ object ReadData {
             filter(taxiTripDataDf("dropoffHour").isin( dropOffHoursWithMaxCounts:_* ))
     //////////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+    //////////--------------------Busiest Neighbourhoods----------------
+//    val results=findBusiestNeighbourhoods(taxiTripDataDf)
+    ////////////////////////////
     val endTime = System.currentTimeMillis()
 
     sparkSession.stopInsightEdgeContext()
@@ -94,6 +98,28 @@ object ReadData {
 
     dropOffHoursWithMaxCounts
   }
+
+  def findBusiestNeighbourhoods(taxiTripDataDf : DataFrame): scala.collection.immutable.SortedMap[Long,String]={
+    val map = LoadNeighbourhoodData.getManhattanNeighbourhoods
+    val results =  scala.collection.immutable.SortedMap[Long,String]()
+    var count:Long =0
+   for( neighbourhood <- map.values ){
+     for(shape <- neighbourhood.shape){
+       count += taxiTripDataDf.filter(taxiTripDataDf("pickupLocation") geoWithin shape ).count()
+     }
+
+     results+(count->neighbourhood.properties.getProperty("NTAName"))
+     count=0
+   }
+
+    println(results(1))
+    println(results(2))
+    println(results(3))
+
+    return results
+
+  }
+
 
   //TODO
   //1. compare foot print of spark with space
