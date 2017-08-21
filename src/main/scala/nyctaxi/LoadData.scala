@@ -55,7 +55,9 @@ object LoadData {
 
     val df = sparkSession.read.option("header","true").csv(paths.toSeq: _*)
 
-    println( "Total count:" + df.count() )
+    val numOfPartitions = df.rdd.getNumPartitions
+
+    println( "Total count:" + df.count() + ", partitions number:" + numOfPartitions )
 
     val filteredDf = df.select( "VendorID",
       "tpep_pickup_datetime",
