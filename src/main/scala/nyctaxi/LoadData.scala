@@ -46,7 +46,7 @@ object LoadData {
       .insightEdgeConfig(ieConfig)
       .getOrCreate()
 
-    val time1 = System.currentTimeMillis()
+
     val paths = args(0).split(",")
 
     println( "Paths:" + paths.mkString(", ") )
@@ -57,7 +57,7 @@ object LoadData {
 
     val numOfPartitions = df.rdd.getNumPartitions
 
-    println( "Total count:" + df.count() + ", partitions number:" + numOfPartitions )
+    println( "Partitions number:" + numOfPartitions )
 
     val filteredDf = df.select( "VendorID",
       "tpep_pickup_datetime",
@@ -73,7 +73,6 @@ object LoadData {
           df("dropoff_latitude") <= ( goldmanSacksLocation.latitude + locationPrecision ))
       .filter(d=>isWeekday(d.getAs[String]("tpep_pickup_datetime")))
 
-//    println( "filteredDf count:" + filteredDf.count() )
 
     val taxiTripsRdd = filteredDf.rdd.map( row => new TaxiTripData(
       id = null,
