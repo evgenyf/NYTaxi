@@ -6,6 +6,7 @@ import java.time.{DayOfWeek, LocalDate}
 import java.util.{Calendar, Date}
 
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 import org.insightedge.spark.context.InsightEdgeConfig
 import org.insightedge.spark.implicits.all._
@@ -92,7 +93,15 @@ object LoadData {
       //clear existing data
     //TODO ! expose indication for clearing space before writing
     GridProxyFactory.getOrCreateClustered(ieConfig).clear(null)
+
     taxiTripsRdd.saveToGrid()
+
+
+
+
+//    taxiTripsRdd.
+
+
 
 /*
     df.printSchema()
@@ -102,9 +111,26 @@ object LoadData {
     filteredDf.show()
 */
 
-    println( "Rdd count=" + taxiTripsRdd.count() )
 
     val endTime = System.currentTimeMillis()
+
+
+    val time1 = System.currentTimeMillis()
+    //TODO time of writing to file
+    taxiTripsRdd.saveAsTextFile( "results___" + System.currentTimeMillis() + ".txt" )
+    val time2 = System.currentTimeMillis()
+    //TODO time of persist
+    taxiTripsRdd.persist(StorageLevel.DISK_ONLY)
+    val time3 = System.currentTimeMillis()
+    println( "Saving as text file took:" + ( time2 - time1 ) + " msec." )
+
+
+    println( "Persist took:" + ( time3 - time2 ) + " msec." )
+
+
+
+
+//    println( "Rdd count=" + taxiTripsRdd.count() )
 
     sparkSession.stopInsightEdgeContext()
 
