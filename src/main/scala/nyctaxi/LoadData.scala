@@ -102,7 +102,7 @@ object LoadData {
       .filter(d=>isWeekday(d.getAs[String]("tpep_pickup_datetime")))
 
 
-    println( "Partitions number 2:" + filteredDf.rdd.getNumPartitions )
+//    println( "Partitions number 2:" + filteredDf.rdd.getNumPartitions )
 
     val taxiTripsRdd = filteredDf.rdd.map( row => new TaxiTripData(
       id = null,
