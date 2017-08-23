@@ -31,22 +31,35 @@ object LoadData {
       System.exit(1)
     }
 
-    val settings = if (args.length > 1) args else Array("spark://127.0.0.1:7077", "insightedge-space", "insightedge", "127.0.0.1:4174", args(0))
-    if (settings.length < 5) {
+    val settings = if (args.length > 2) args else Array("spark://127.0.0.1:7077", "insightedge-space", "insightedge", "127.0.0.1:4174", args(0), "n/a")
+
+    if (settings.length < 6) {
       System.err.println("Usage: LoadDataFrame <spark master url> <space name> <space groups> <space locator>, first parameter must be url to csv file")
       System.exit(1)
     }
-    val Array(master, space, groups, locators) = settings.slice( 0, 4 )
+
+    val Array(master, space, groups, locators) = settings.slice(0, 4)
     val ieConfig = InsightEdgeConfig(space, Some(groups), Some(locators))
 
     val conf = new SparkConf().setMaster("local[2]").setAppName("NYC taxi")
+    if (args.length > 1) {
+      println("Setting [spark.default.parallelism] :" + args(1))
+      conf.set("spark.default.parallelism", args(1))
+    }
     val sc = new SparkContext(conf)
+    val defaultParallelism = sc.defaultParallelism
+
+    println( "defaultParallelism:" + defaultParallelism )
+
     val sparkSession = SparkSession.builder
       .config(conf = conf)
       .appName("Taxi")
       .insightEdgeConfig(ieConfig)
       .getOrCreate()
 
+    val allProps = conf.getAll
+
+//    val sparkDefaultParallelismVal = conf.get("spark.default.parallelism")
 
     val paths = args(0).split(",")
 
@@ -54,7 +67,7 @@ object LoadData {
 
     val startTime = System.currentTimeMillis()
 
-    val df = sparkSession.read.option("header","true").csv(paths.toSeq: _*)
+    val df = sparkSession.read.option("header","true")/*.option("fs.local.block.size", 512)*/.csv(paths.toSeq: _*)
 
     val numOfPartitions = df.rdd.getNumPartitions
 
@@ -117,12 +130,13 @@ object LoadData {
 
     val time1 = System.currentTimeMillis()
     //TODO time of writing to file
-    taxiTripsRdd.saveAsTextFile( "results___" + System.currentTimeMillis() + ".txt" )
+    val fileName = "results___" + System.currentTimeMillis() + ".txt"
+    taxiTripsRdd.saveAsTextFile( fileName )
     val time2 = System.currentTimeMillis()
     //TODO time of persist
     taxiTripsRdd.persist(StorageLevel.DISK_ONLY)
     val time3 = System.currentTimeMillis()
-    println( "Saving as text file took:" + ( time2 - time1 ) + " msec." )
+    println( "Saving as text file took:" + ( time2 - time1 ) + " msec. to file:" + fileName )
 
 
     println( "Persist took:" + ( time3 - time2 ) + " msec." )
