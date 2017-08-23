@@ -26,12 +26,15 @@ object LoadData {
   //first parameter is link to csv file
   def main(args: Array[String]): Unit = {
 
+    print( "Arguments:" )
+    args.foreach(println)
+
     if (args.length == 0) {
       System.err.println("At least one parameter with link to csv file should be passed")
       System.exit(1)
     }
 
-    val settings = if (args.length > 2) args else Array("spark://127.0.0.1:7077", "insightedge-space", "insightedge", "127.0.0.1:4174", args(0), "n/a")
+    val settings = if (args.length > 3) args else Array("spark://127.0.0.1:7077", "insightedge-space", "insightedge", "127.0.0.1:4174", "n/a", "n/a", "n/a")
 
     if (settings.length < 6) {
       System.err.println("Usage: LoadDataFrame <spark master url> <space name> <space groups> <space locator>, first parameter must be url to csv file")
@@ -67,11 +70,22 @@ object LoadData {
 
     val startTime = System.currentTimeMillis()
 
-    val df = sparkSession.read.option("header","true")/*.option("fs.local.block.size", 512)*/.csv(paths.toSeq: _*)
+
+    var df = sparkSession.read.option("header","true")/*.option("fs.local.block.size", 512)*/.csv(paths.toSeq: _*)
+
+    if (args.length > 2) {
+      println("Setting partitions count:" + args(2))
+      df = df.repartition( args(2).toInt )
+    }
+
 
     val numOfPartitions = df.rdd.getNumPartitions
 
+//    println( "NUM=" + df.rdd.repartition(numOfPartitions*2).getNumPartitions )
+
     println( "Partitions number:" + numOfPartitions )
+
+//    println( "Partitions number after increasing:" + df.rdd.getNumPartitions )
 
     val filteredDf = df.select( "VendorID",
       "tpep_pickup_datetime",
@@ -87,6 +101,8 @@ object LoadData {
           df("dropoff_latitude") <= ( goldmanSacksLocation.latitude + locationPrecision ))
       .filter(d=>isWeekday(d.getAs[String]("tpep_pickup_datetime")))
 
+
+    println( "Partitions number 2:" + filteredDf.rdd.getNumPartitions )
 
     val taxiTripsRdd = filteredDf.rdd.map( row => new TaxiTripData(
       id = null,
@@ -134,12 +150,10 @@ object LoadData {
     taxiTripsRdd.saveAsTextFile( fileName )
     val time2 = System.currentTimeMillis()
     //TODO time of persist
-    taxiTripsRdd.persist(StorageLevel.DISK_ONLY)
-    val time3 = System.currentTimeMillis()
-    println( "Saving as text file took:" + ( time2 - time1 ) + " msec. to file:" + fileName )
+    //taxiTripsRdd.persist(StorageLevel.DISK_ONLY)
+    //val time3 = System.currentTimeMillis()
 
 
-    println( "Persist took:" + ( time3 - time2 ) + " msec." )
 
 
 
@@ -148,7 +162,7 @@ object LoadData {
 
     sparkSession.stopInsightEdgeContext()
 
-    println( "DataFrame load took " + ( endTime - startTime ) + " msec." )
+    println( "DataFrame load took " + ( endTime - startTime ) + " msec., saving as text file took:" + ( time2 - time1 ) + " msec. to file:" + fileName + ", used partitions number:" + numOfPartitions + ", defaultParallelism:" + defaultParallelism )
   }
 
   def getHour( date : Date ): Int ={
