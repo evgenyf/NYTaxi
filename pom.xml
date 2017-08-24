@@ -11,7 +11,7 @@
     <properties>
         <!--Toggling this property between provided/compile allows to run examples in cluster/IDE  -->
         <distribution.dependencies.scope>provided</distribution.dependencies.scope>
-        <ie.version>1.1.0-rc-11002-317</ie.version>
+        <ie.version>2.1.0</ie.version>
     </properties>
 
 

@@ -44,7 +44,7 @@ object LoadData {
     val Array(master, space, groups, locators) = settings.slice(0, 4)
     val ieConfig = InsightEdgeConfig(space, Some(groups), Some(locators))
 
-    val conf = new SparkConf().setMaster("local[2]").setAppName("NYC taxi")
+    val conf = new SparkConf().setMaster(master).setAppName("NYC taxi - loader")
     if (args.length > 1) {
       println("Setting [spark.default.parallelism] :" + args(1))
       conf.set("spark.default.parallelism", args(1))
