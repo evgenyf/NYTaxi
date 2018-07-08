@@ -1,4 +1,4 @@
-1. First of all run mv clean install on project, as result ja file [MyNYTaxi_PROJECT_LOCATION]/target/nytaxi-1.1.0-SNAPSHOT.jar will be created
+1. First of all run mvn clean install on project, as result jar file [MyNYTaxi_PROJECT_LOCATION]/target/nytaxi-1.1.0-SNAPSHOT.jar will be created
 2. Download InsightEdge zip file, this project now is using InsightEdge 2.1 GA for measurement purposes
 3. Then go to sbin directory, define number of workers ( by using environment variable SPARK_WORKER_INSTANCES ) and run InsightEdge in demo mode: export SPARK_WORKER_INSTANCES=4 and then ./insightedge.sh --mode demo
 4. gs-ui can be run in order to check that everything is running properly
