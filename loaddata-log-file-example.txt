@@ -1,0 +1,259 @@
+[evgeny@evgeny-pcu bin]$ ./insightedge-submit --class nyctaxi.LoadData --master spark://127.0.0.1:7077 /home/evgeny/dev/workspace/MyNYTaxi/target/nytaxi-1.1.0-SNAPSHOT.jar /home/evgeny/Downloads/csvs/yellow_tripdata_2016-01.csv 4
+Arguments:/home/evgeny/Downloads/csvs/yellow_tripdata_2016-01.csv
+4
+Setting [spark.default.parallelism] :4
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+18/07/08 12:47:35 INFO SparkContext: Running Spark version 2.1.1
+18/07/08 12:47:36 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+18/07/08 12:47:36 WARN Utils: Your hostname, evgeny-pcu resolves to a loopback address: 127.0.1.1; using 192.168.33.24 instead (on interface enp0s25)
+18/07/08 12:47:36 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+18/07/08 12:47:36 INFO SecurityManager: Changing view acls to: evgeny
+18/07/08 12:47:36 INFO SecurityManager: Changing modify acls to: evgeny
+18/07/08 12:47:36 INFO SecurityManager: Changing view acls groups to: 
+18/07/08 12:47:36 INFO SecurityManager: Changing modify acls groups to: 
+18/07/08 12:47:36 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users  with view permissions: Set(evgeny); groups with view permissions: Set(); users  with modify permissions: Set(evgeny); groups with modify permissions: Set()
+18/07/08 12:47:37 INFO Utils: Successfully started service 'sparkDriver' on port 33742.
+18/07/08 12:47:37 INFO SparkEnv: Registering MapOutputTracker
+18/07/08 12:47:37 INFO SparkEnv: Registering BlockManagerMaster
+18/07/08 12:47:37 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+18/07/08 12:47:37 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+18/07/08 12:47:37 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-dcb525ad-c7a6-41b3-8f7a-fbd645822078
+18/07/08 12:47:37 INFO MemoryStore: MemoryStore started with capacity 366.3 MB
+18/07/08 12:47:37 INFO SparkEnv: Registering OutputCommitCoordinator
+18/07/08 12:47:38 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+18/07/08 12:47:38 INFO SparkUI: Bound SparkUI to 0.0.0.0, and started at http://192.168.33.24:4040
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/lib/insightedge-core.jar at spark://192.168.33.24:33742/jars/insightedge-core.jar with timestamp 1531043258580
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/lib/insightedge-scala.jar at spark://192.168.33.24:33742/jars/insightedge-scala.jar with timestamp 1531043258585
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/commons-logging-1.1.3.jar at spark://192.168.33.24:33742/jars/commons-logging-1.1.3.jar with timestamp 1531043258589
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/com.springsource.org.aopalliance-1.0.0.jar at spark://192.168.33.24:33742/jars/com.springsource.org.aopalliance-1.0.0.jar with timestamp 1531043258589
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/spring-aop-4.1.1.RELEASE.jar at spark://192.168.33.24:33742/jars/spring-aop-4.1.1.RELEASE.jar with timestamp 1531043258589
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/spring-aspects-4.1.1.RELEASE.jar at spark://192.168.33.24:33742/jars/spring-aspects-4.1.1.RELEASE.jar with timestamp 1531043258590
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/spring-beans-4.1.1.RELEASE.jar at spark://192.168.33.24:33742/jars/spring-beans-4.1.1.RELEASE.jar with timestamp 1531043258590
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/spring-context-4.1.1.RELEASE.jar at spark://192.168.33.24:33742/jars/spring-context-4.1.1.RELEASE.jar with timestamp 1531043258590
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/spring-context-support-4.1.1.RELEASE.jar at spark://192.168.33.24:33742/jars/spring-context-support-4.1.1.RELEASE.jar with timestamp 1531043258590
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/spring-core-4.1.1.RELEASE.jar at spark://192.168.33.24:33742/jars/spring-core-4.1.1.RELEASE.jar with timestamp 1531043258590
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/spring-expression-4.1.1.RELEASE.jar at spark://192.168.33.24:33742/jars/spring-expression-4.1.1.RELEASE.jar with timestamp 1531043258591
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/spring-tx-4.1.1.RELEASE.jar at spark://192.168.33.24:33742/jars/spring-tx-4.1.1.RELEASE.jar with timestamp 1531043258592
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/xap-asm.jar at spark://192.168.33.24:33742/jars/xap-asm.jar with timestamp 1531043258593
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/xap-common.jar at spark://192.168.33.24:33742/jars/xap-common.jar with timestamp 1531043258593
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/xap-datagrid.jar at spark://192.168.33.24:33742/jars/xap-datagrid.jar with timestamp 1531043258593
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/xap-openspaces.jar at spark://192.168.33.24:33742/jars/xap-openspaces.jar with timestamp 1531043258593
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/xap-premium-common.jar at spark://192.168.33.24:33742/jars/xap-premium-common.jar with timestamp 1531043258594
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/required/xap-trove.jar at spark://192.168.33.24:33742/jars/xap-trove.jar with timestamp 1531043258594
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/jts-1.13.jar at spark://192.168.33.24:33742/jars/jts-1.13.jar with timestamp 1531043258595
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/lucene-analyzers-common-6.4.2.jar at spark://192.168.33.24:33742/jars/lucene-analyzers-common-6.4.2.jar with timestamp 1531043258595
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/lucene-core-6.4.2.jar at spark://192.168.33.24:33742/jars/lucene-core-6.4.2.jar with timestamp 1531043258596
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/lucene-misc-6.4.2.jar at spark://192.168.33.24:33742/jars/lucene-misc-6.4.2.jar with timestamp 1531043258596
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/lucene-queries-6.4.2.jar at spark://192.168.33.24:33742/jars/lucene-queries-6.4.2.jar with timestamp 1531043258597
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/lucene-queryparser-6.4.2.jar at spark://192.168.33.24:33742/jars/lucene-queryparser-6.4.2.jar with timestamp 1531043258598
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/lucene-sandbox-6.4.2.jar at spark://192.168.33.24:33742/jars/lucene-sandbox-6.4.2.jar with timestamp 1531043258599
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/lucene-spatial-extras-6.4.2.jar at spark://192.168.33.24:33742/jars/lucene-spatial-extras-6.4.2.jar with timestamp 1531043258599
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/noggit-0.7.jar at spark://192.168.33.24:33742/jars/noggit-0.7.jar with timestamp 1531043258599
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/spatial4j-0.6.jar at spark://192.168.33.24:33742/jars/spatial4j-0.6.jar with timestamp 1531043258599
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/lib/optional/spatial/xap-spatial.jar at spark://192.168.33.24:33742/jars/xap-spatial.jar with timestamp 1531043258600
+18/07/08 12:47:38 INFO SparkContext: Added JAR file:/home/evgeny/dev/workspace/MyNYTaxi/target/nytaxi-1.1.0-SNAPSHOT.jar at spark://192.168.33.24:33742/jars/nytaxi-1.1.0-SNAPSHOT.jar with timestamp 1531043258600
+18/07/08 12:47:38 INFO StandaloneAppClient$ClientEndpoint: Connecting to master spark://127.0.0.1:7077...
+18/07/08 12:47:39 INFO TransportClientFactory: Successfully created connection to /127.0.0.1:7077 after 42 ms (0 ms spent in bootstraps)
+18/07/08 12:47:42 INFO StandaloneSchedulerBackend: Connected to Spark cluster with app ID app-20180708124741-0000
+18/07/08 12:47:42 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 41880.
+18/07/08 12:47:42 INFO NettyBlockTransferService: Server created on 192.168.33.24:41880
+18/07/08 12:47:42 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+18/07/08 12:47:42 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 192.168.33.24, 41880, None)
+18/07/08 12:47:42 INFO BlockManagerMasterEndpoint: Registering block manager 192.168.33.24:41880 with 366.3 MB RAM, BlockManagerId(driver, 192.168.33.24, 41880, None)
+18/07/08 12:47:42 INFO StandaloneAppClient$ClientEndpoint: Executor added: app-20180708124741-0000/0 on worker-20180708124120-192.168.33.24-40847 (192.168.33.24:40847) with 4 cores
+18/07/08 12:47:42 INFO StandaloneSchedulerBackend: Granted executor ID app-20180708124741-0000/0 on hostPort 192.168.33.24:40847 with 4 cores, 1024.0 MB RAM
+18/07/08 12:47:42 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 192.168.33.24, 41880, None)
+18/07/08 12:47:42 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 192.168.33.24, 41880, None)
+18/07/08 12:47:42 INFO StandaloneAppClient$ClientEndpoint: Executor updated: app-20180708124741-0000/0 is now RUNNING
+18/07/08 12:47:43 INFO StandaloneSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.0
+defaultParallelism:4
+18/07/08 12:47:43 WARN SparkContext: Using an existing SparkContext; some configuration may not take effect.
+18/07/08 12:47:43 INFO SharedState: Warehouse path is 'file:/home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/bin/spark-warehouse/'.
+Paths:/home/evgeny/Downloads/csvs/yellow_tripdata_2016-01.csv
+18/07/08 12:47:46 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 236.5 KB, free 366.1 MB)
+18/07/08 12:47:46 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 22.9 KB, free 366.0 MB)
+18/07/08 12:47:46 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on 192.168.33.24:41880 (size: 22.9 KB, free: 366.3 MB)
+18/07/08 12:47:46 INFO SparkContext: Created broadcast 0 from csv at LoadData.scala:93
+18/07/08 12:47:47 INFO FileInputFormat: Total input paths to process : 1
+18/07/08 12:47:47 INFO SparkContext: Starting job: csv at LoadData.scala:93
+18/07/08 12:47:47 INFO DAGScheduler: Got job 0 (csv at LoadData.scala:93) with 1 output partitions
+18/07/08 12:47:47 INFO DAGScheduler: Final stage: ResultStage 0 (csv at LoadData.scala:93)
+18/07/08 12:47:47 INFO DAGScheduler: Parents of final stage: List()
+18/07/08 12:47:47 INFO DAGScheduler: Missing parents: List()
+18/07/08 12:47:47 INFO DAGScheduler: Submitting ResultStage 0 (MapPartitionsRDD[2] at csv at LoadData.scala:93), which has no missing parents
+18/07/08 12:47:47 INFO MemoryStore: Block broadcast_1 stored as values in memory (estimated size 3.5 KB, free 366.0 MB)
+18/07/08 12:47:47 INFO MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 2.1 KB, free 366.0 MB)
+18/07/08 12:47:47 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on 192.168.33.24:41880 (size: 2.1 KB, free: 366.3 MB)
+18/07/08 12:47:47 INFO SparkContext: Created broadcast 1 from broadcast at DAGScheduler.scala:996
+18/07/08 12:47:47 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 0 (MapPartitionsRDD[2] at csv at LoadData.scala:93)
+18/07/08 12:47:47 INFO TaskSchedulerImpl: Adding task set 0.0 with 1 tasks
+18/07/08 12:47:50 INFO CoarseGrainedSchedulerBackend$DriverEndpoint: Registered executor NettyRpcEndpointRef(null) (192.168.33.24:32800) with ID 0
+18/07/08 12:47:50 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, 192.168.33.24, executor 0, partition 0, PROCESS_LOCAL, 8020 bytes)
+18/07/08 12:47:50 INFO BlockManagerMasterEndpoint: Registering block manager 192.168.33.24:32849 with 366.3 MB RAM, BlockManagerId(0, 192.168.33.24, 32849, None)
+18/07/08 12:47:56 INFO BlockManagerInfo: Added broadcast_1_piece0 in memory on 192.168.33.24:32849 (size: 2.1 KB, free: 366.3 MB)
+18/07/08 12:48:01 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on 192.168.33.24:32849 (size: 22.9 KB, free: 366.3 MB)
+18/07/08 12:48:02 INFO DAGScheduler: ResultStage 0 (csv at LoadData.scala:93) finished in 14.389 s
+18/07/08 12:48:02 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 11772 ms on 192.168.33.24 (executor 0) (1/1)
+18/07/08 12:48:02 INFO TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+18/07/08 12:48:02 INFO DAGScheduler: Job 0 finished: csv at LoadData.scala:93, took 14.905910 s
+18/07/08 12:48:02 INFO MemoryStore: Block broadcast_2 stored as values in memory (estimated size 236.5 KB, free 365.8 MB)
+18/07/08 12:48:02 INFO MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 22.9 KB, free 365.8 MB)
+18/07/08 12:48:02 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on 192.168.33.24:41880 (size: 22.9 KB, free: 366.3 MB)
+18/07/08 12:48:02 INFO SparkContext: Created broadcast 2 from csv at LoadData.scala:93
+18/07/08 12:48:02 INFO FileInputFormat: Total input paths to process : 1
+18/07/08 12:48:02 INFO SparkContext: Starting job: csv at LoadData.scala:93
+18/07/08 12:48:02 INFO DAGScheduler: Got job 1 (csv at LoadData.scala:93) with 1 output partitions
+18/07/08 12:48:02 INFO DAGScheduler: Final stage: ResultStage 1 (csv at LoadData.scala:93)
+18/07/08 12:48:02 INFO DAGScheduler: Parents of final stage: List()
+18/07/08 12:48:02 INFO DAGScheduler: Missing parents: List()
+18/07/08 12:48:02 INFO DAGScheduler: Submitting ResultStage 1 (MapPartitionsRDD[5] at csv at LoadData.scala:93), which has no missing parents
+18/07/08 12:48:02 INFO MemoryStore: Block broadcast_3 stored as values in memory (estimated size 3.5 KB, free 365.8 MB)
+18/07/08 12:48:02 INFO MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 2.1 KB, free 365.8 MB)
+18/07/08 12:48:02 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on 192.168.33.24:41880 (size: 2.1 KB, free: 366.3 MB)
+18/07/08 12:48:02 INFO SparkContext: Created broadcast 3 from broadcast at DAGScheduler.scala:996
+18/07/08 12:48:02 INFO DAGScheduler: Submitting 1 missing tasks from ResultStage 1 (MapPartitionsRDD[5] at csv at LoadData.scala:93)
+18/07/08 12:48:02 INFO TaskSchedulerImpl: Adding task set 1.0 with 1 tasks
+18/07/08 12:48:02 INFO TaskSetManager: Starting task 0.0 in stage 1.0 (TID 1, 192.168.33.24, executor 0, partition 0, PROCESS_LOCAL, 8020 bytes)
+18/07/08 12:48:02 INFO BlockManagerInfo: Added broadcast_3_piece0 in memory on 192.168.33.24:32849 (size: 2.1 KB, free: 366.3 MB)
+18/07/08 12:48:02 INFO BlockManagerInfo: Added broadcast_2_piece0 in memory on 192.168.33.24:32849 (size: 22.9 KB, free: 366.3 MB)
+18/07/08 12:48:02 INFO TaskSetManager: Finished task 0.0 in stage 1.0 (TID 1) in 188 ms on 192.168.33.24 (executor 0) (1/1)
+18/07/08 12:48:02 INFO TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+18/07/08 12:48:02 INFO DAGScheduler: ResultStage 1 (csv at LoadData.scala:93) finished in 0.189 s
+18/07/08 12:48:02 INFO DAGScheduler: Job 1 finished: csv at LoadData.scala:93, took 0.223496 s
+18/07/08 12:48:03 INFO BlockManagerInfo: Removed broadcast_3_piece0 on 192.168.33.24:32849 in memory (size: 2.1 KB, free: 366.3 MB)
+18/07/08 12:48:03 INFO BlockManagerInfo: Removed broadcast_3_piece0 on 192.168.33.24:41880 in memory (size: 2.1 KB, free: 366.3 MB)
+18/07/08 12:48:03 INFO BlockManagerInfo: Removed broadcast_1_piece0 on 192.168.33.24:32849 in memory (size: 2.1 KB, free: 366.3 MB)
+18/07/08 12:48:03 INFO BlockManagerInfo: Removed broadcast_1_piece0 on 192.168.33.24:41880 in memory (size: 2.1 KB, free: 366.3 MB)
+18/07/08 12:48:03 INFO BlockManagerInfo: Removed broadcast_0_piece0 on 192.168.33.24:32849 in memory (size: 22.9 KB, free: 366.3 MB)
+18/07/08 12:48:03 INFO BlockManagerInfo: Removed broadcast_0_piece0 on 192.168.33.24:41880 in memory (size: 22.9 KB, free: 366.3 MB)
+18/07/08 12:48:03 INFO BlockManagerInfo: Removed broadcast_2_piece0 on 192.168.33.24:41880 in memory (size: 22.9 KB, free: 366.3 MB)
+18/07/08 12:48:03 INFO BlockManagerInfo: Removed broadcast_2_piece0 on 192.168.33.24:32849 in memory (size: 22.9 KB, free: 366.3 MB)
+18/07/08 12:48:06 INFO FileSourceStrategy: Pruning directories with: 
+18/07/08 12:48:06 INFO FileSourceStrategy: Post-Scan Filters: 
+18/07/08 12:48:06 INFO FileSourceStrategy: Output Data Schema: struct<VendorID: string, tpep_pickup_datetime: string, tpep_dropoff_datetime: string, passenger_count: string, trip_distance: string ... 17 more fields>
+18/07/08 12:48:06 INFO FileSourceStrategy: Pushed Filters: 
+18/07/08 12:48:08 INFO CodeGenerator: Code generated in 2040.281369 ms
+18/07/08 12:48:08 INFO MemoryStore: Block broadcast_4 stored as values in memory (estimated size 287.9 KB, free 366.0 MB)
+18/07/08 12:48:08 INFO MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 24.3 KB, free 366.0 MB)
+18/07/08 12:48:08 INFO BlockManagerInfo: Added broadcast_4_piece0 in memory on 192.168.33.24:41880 (size: 24.3 KB, free: 366.3 MB)
+18/07/08 12:48:08 INFO SparkContext: Created broadcast 4 from rdd at LoadData.scala:101
+18/07/08 12:48:08 INFO FileSourceScanExec: Planning scan with bin packing, max size: 134217728 bytes, open cost is considered as scanning 4194304 bytes.
+Partitions number:13
+18/07/08 12:48:09 INFO FileSourceStrategy: Pruning directories with: 
+18/07/08 12:48:09 INFO FileSourceStrategy: Post-Scan Filters: isnotnull(dropoff_longitude#9),isnotnull(dropoff_latitude#10),(cast(dropoff_longitude#9 as double) >= -74.014961),(cast(dropoff_longitude#9 as double) <= -74.01296099999999),(cast(dropoff_latitude#10 as double) >= 40.713672),(cast(dropoff_latitude#10 as double) <= 40.715672)
+18/07/08 12:48:09 INFO FileSourceStrategy: Output Data Schema: struct<VendorID: string, tpep_pickup_datetime: string, tpep_dropoff_datetime: string, passenger_count: string, trip_distance: string ... 7 more fields>
+18/07/08 12:48:09 INFO FileSourceStrategy: Pushed Filters: IsNotNull(dropoff_longitude),IsNotNull(dropoff_latitude)
+18/07/08 12:48:09 INFO CodeGenerator: Code generated in 49.3961 ms
+18/07/08 12:48:09 INFO MemoryStore: Block broadcast_5 stored as values in memory (estimated size 287.9 KB, free 365.7 MB)
+18/07/08 12:48:09 INFO MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 24.3 KB, free 365.7 MB)
+18/07/08 12:48:09 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on 192.168.33.24:41880 (size: 24.3 KB, free: 366.3 MB)
+18/07/08 12:48:09 INFO SparkContext: Created broadcast 5 from rdd at LoadData.scala:126
+18/07/08 12:48:09 INFO FileSourceScanExec: Planning scan with bin packing, max size: 134217728 bytes, open cost is considered as scanning 4194304 bytes.
+2018-07-08 12:48:09,644 CONFIG [com.gigaspaces.logger] - Log file: /home/evgeny/dev/builds/IE/gigaspaces-insightedge-2.1.0-ga-100-premium/datagrid/logs/2018-07-08~12.48-gigaspaces-service-127.0.1.1-8740.log
+Jul 08, 2018 12:48:09 PM net.jini.discovery.LookupLocatorDiscovery$LocatorReg tryGetProxy
+INFO: Connected to LUS using locator 127.0.0.1:4174
+18/07/08 12:48:10 INFO GridProxyUtils: createClusteredProxy took 1.33614 seconds
+18/07/08 12:48:10 INFO SparkContext: Starting job: foreachPartition at InsightEdgeRDDFunctions.scala:50
+18/07/08 12:48:10 INFO DAGScheduler: Got job 2 (foreachPartition at InsightEdgeRDDFunctions.scala:50) with 13 output partitions
+18/07/08 12:48:10 INFO DAGScheduler: Final stage: ResultStage 2 (foreachPartition at InsightEdgeRDDFunctions.scala:50)
+18/07/08 12:48:10 INFO DAGScheduler: Parents of final stage: List()
+18/07/08 12:48:10 INFO DAGScheduler: Missing parents: List()
+18/07/08 12:48:10 INFO DAGScheduler: Submitting ResultStage 2 (MapPartitionsRDD[16] at map at LoadData.scala:126), which has no missing parents
+18/07/08 12:48:10 INFO MemoryStore: Block broadcast_6 stored as values in memory (estimated size 23.3 KB, free 365.7 MB)
+18/07/08 12:48:10 INFO MemoryStore: Block broadcast_6_piece0 stored as bytes in memory (estimated size 11.1 KB, free 365.7 MB)
+18/07/08 12:48:10 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on 192.168.33.24:41880 (size: 11.1 KB, free: 366.2 MB)
+18/07/08 12:48:10 INFO SparkContext: Created broadcast 6 from broadcast at DAGScheduler.scala:996
+18/07/08 12:48:10 INFO DAGScheduler: Submitting 13 missing tasks from ResultStage 2 (MapPartitionsRDD[16] at map at LoadData.scala:126)
+18/07/08 12:48:10 INFO TaskSchedulerImpl: Adding task set 2.0 with 13 tasks
+18/07/08 12:48:10 INFO TaskSetManager: Starting task 0.0 in stage 2.0 (TID 2, 192.168.33.24, executor 0, partition 0, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:10 INFO TaskSetManager: Starting task 1.0 in stage 2.0 (TID 3, 192.168.33.24, executor 0, partition 1, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:10 INFO TaskSetManager: Starting task 2.0 in stage 2.0 (TID 4, 192.168.33.24, executor 0, partition 2, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:10 INFO TaskSetManager: Starting task 3.0 in stage 2.0 (TID 5, 192.168.33.24, executor 0, partition 3, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:10 INFO BlockManagerInfo: Added broadcast_6_piece0 in memory on 192.168.33.24:32849 (size: 11.1 KB, free: 366.3 MB)
+18/07/08 12:48:15 INFO BlockManagerInfo: Added broadcast_5_piece0 in memory on 192.168.33.24:32849 (size: 24.3 KB, free: 366.3 MB)
+18/07/08 12:48:29 INFO TaskSetManager: Starting task 4.0 in stage 2.0 (TID 6, 192.168.33.24, executor 0, partition 4, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:29 INFO TaskSetManager: Finished task 0.0 in stage 2.0 (TID 2) in 18293 ms on 192.168.33.24 (executor 0) (1/13)
+18/07/08 12:48:30 INFO TaskSetManager: Starting task 5.0 in stage 2.0 (TID 7, 192.168.33.24, executor 0, partition 5, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:31 INFO TaskSetManager: Finished task 2.0 in stage 2.0 (TID 4) in 20235 ms on 192.168.33.24 (executor 0) (2/13)
+18/07/08 12:48:33 INFO TaskSetManager: Starting task 6.0 in stage 2.0 (TID 8, 192.168.33.24, executor 0, partition 6, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:33 INFO TaskSetManager: Finished task 1.0 in stage 2.0 (TID 3) in 22281 ms on 192.168.33.24 (executor 0) (3/13)
+18/07/08 12:48:36 INFO TaskSetManager: Starting task 7.0 in stage 2.0 (TID 9, 192.168.33.24, executor 0, partition 7, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:36 INFO TaskSetManager: Finished task 3.0 in stage 2.0 (TID 5) in 25650 ms on 192.168.33.24 (executor 0) (4/13)
+18/07/08 12:48:43 INFO TaskSetManager: Starting task 8.0 in stage 2.0 (TID 10, 192.168.33.24, executor 0, partition 8, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:43 INFO TaskSetManager: Finished task 4.0 in stage 2.0 (TID 6) in 14830 ms on 192.168.33.24 (executor 0) (5/13)
+18/07/08 12:48:45 INFO TaskSetManager: Starting task 9.0 in stage 2.0 (TID 11, 192.168.33.24, executor 0, partition 9, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:45 INFO TaskSetManager: Finished task 5.0 in stage 2.0 (TID 7) in 14544 ms on 192.168.33.24 (executor 0) (6/13)
+18/07/08 12:48:46 INFO TaskSetManager: Starting task 10.0 in stage 2.0 (TID 12, 192.168.33.24, executor 0, partition 10, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:46 INFO TaskSetManager: Finished task 6.0 in stage 2.0 (TID 8) in 13873 ms on 192.168.33.24 (executor 0) (7/13)
+18/07/08 12:48:49 INFO TaskSetManager: Starting task 11.0 in stage 2.0 (TID 13, 192.168.33.24, executor 0, partition 11, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:49 INFO TaskSetManager: Finished task 7.0 in stage 2.0 (TID 9) in 12861 ms on 192.168.33.24 (executor 0) (8/13)
+18/07/08 12:48:56 INFO TaskSetManager: Starting task 12.0 in stage 2.0 (TID 14, 192.168.33.24, executor 0, partition 12, PROCESS_LOCAL, 8538 bytes)
+18/07/08 12:48:56 INFO TaskSetManager: Finished task 8.0 in stage 2.0 (TID 10) in 12213 ms on 192.168.33.24 (executor 0) (9/13)
+18/07/08 12:48:58 INFO TaskSetManager: Finished task 10.0 in stage 2.0 (TID 12) in 11391 ms on 192.168.33.24 (executor 0) (10/13)
+18/07/08 12:48:58 INFO TaskSetManager: Finished task 9.0 in stage 2.0 (TID 11) in 12982 ms on 192.168.33.24 (executor 0) (11/13)
+18/07/08 12:49:00 INFO TaskSetManager: Finished task 11.0 in stage 2.0 (TID 13) in 11007 ms on 192.168.33.24 (executor 0) (12/13)
+18/07/08 12:49:01 INFO TaskSetManager: Finished task 12.0 in stage 2.0 (TID 14) in 5507 ms on 192.168.33.24 (executor 0) (13/13)
+18/07/08 12:49:01 INFO TaskSchedulerImpl: Removed TaskSet 2.0, whose tasks have all completed, from pool 
+18/07/08 12:49:01 INFO DAGScheduler: ResultStage 2 (foreachPartition at InsightEdgeRDDFunctions.scala:50) finished in 50.823 s
+18/07/08 12:49:01 INFO DAGScheduler: Job 2 finished: foreachPartition at InsightEdgeRDDFunctions.scala:50, took 50.846672 s
+18/07/08 12:49:01 INFO deprecation: mapred.tip.id is deprecated. Instead, use mapreduce.task.id
+18/07/08 12:49:01 INFO deprecation: mapred.task.id is deprecated. Instead, use mapreduce.task.attempt.id
+18/07/08 12:49:01 INFO deprecation: mapred.task.is.map is deprecated. Instead, use mapreduce.task.ismap
+18/07/08 12:49:01 INFO deprecation: mapred.task.partition is deprecated. Instead, use mapreduce.task.partition
+18/07/08 12:49:01 INFO deprecation: mapred.job.id is deprecated. Instead, use mapreduce.job.id
+18/07/08 12:49:01 INFO FileOutputCommitter: File Output Committer Algorithm version is 1
+18/07/08 12:49:01 INFO SparkContext: Starting job: saveAsTextFile at LoadData.scala:169
+18/07/08 12:49:01 INFO DAGScheduler: Got job 3 (saveAsTextFile at LoadData.scala:169) with 13 output partitions
+18/07/08 12:49:01 INFO DAGScheduler: Final stage: ResultStage 3 (saveAsTextFile at LoadData.scala:169)
+18/07/08 12:49:01 INFO DAGScheduler: Parents of final stage: List()
+18/07/08 12:49:01 INFO DAGScheduler: Missing parents: List()
+18/07/08 12:49:01 INFO DAGScheduler: Submitting ResultStage 3 (MapPartitionsRDD[17] at saveAsTextFile at LoadData.scala:169), which has no missing parents
+18/07/08 12:49:01 INFO MemoryStore: Block broadcast_7 stored as values in memory (estimated size 92.1 KB, free 365.6 MB)
+18/07/08 12:49:01 INFO MemoryStore: Block broadcast_7_piece0 stored as bytes in memory (estimated size 35.1 KB, free 365.5 MB)
+18/07/08 12:49:01 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on 192.168.33.24:41880 (size: 35.1 KB, free: 366.2 MB)
+18/07/08 12:49:01 INFO SparkContext: Created broadcast 7 from broadcast at DAGScheduler.scala:996
+18/07/08 12:49:01 INFO DAGScheduler: Submitting 13 missing tasks from ResultStage 3 (MapPartitionsRDD[17] at saveAsTextFile at LoadData.scala:169)
+18/07/08 12:49:01 INFO TaskSchedulerImpl: Adding task set 3.0 with 13 tasks
+18/07/08 12:49:01 INFO TaskSetManager: Starting task 0.0 in stage 3.0 (TID 15, 192.168.33.24, executor 0, partition 0, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:01 INFO TaskSetManager: Starting task 1.0 in stage 3.0 (TID 16, 192.168.33.24, executor 0, partition 1, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:01 INFO TaskSetManager: Starting task 2.0 in stage 3.0 (TID 17, 192.168.33.24, executor 0, partition 2, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:01 INFO TaskSetManager: Starting task 3.0 in stage 3.0 (TID 18, 192.168.33.24, executor 0, partition 3, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:01 INFO BlockManagerInfo: Added broadcast_7_piece0 in memory on 192.168.33.24:32849 (size: 35.1 KB, free: 366.2 MB)
+18/07/08 12:49:10 INFO TaskSetManager: Starting task 4.0 in stage 3.0 (TID 19, 192.168.33.24, executor 0, partition 4, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:10 INFO TaskSetManager: Starting task 5.0 in stage 3.0 (TID 20, 192.168.33.24, executor 0, partition 5, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:10 INFO TaskSetManager: Starting task 6.0 in stage 3.0 (TID 21, 192.168.33.24, executor 0, partition 6, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:10 INFO TaskSetManager: Finished task 2.0 in stage 3.0 (TID 17) in 8979 ms on 192.168.33.24 (executor 0) (1/13)
+18/07/08 12:49:10 INFO TaskSetManager: Finished task 1.0 in stage 3.0 (TID 16) in 8981 ms on 192.168.33.24 (executor 0) (2/13)
+18/07/08 12:49:10 INFO TaskSetManager: Finished task 0.0 in stage 3.0 (TID 15) in 8991 ms on 192.168.33.24 (executor 0) (3/13)
+18/07/08 12:49:11 INFO TaskSetManager: Starting task 7.0 in stage 3.0 (TID 22, 192.168.33.24, executor 0, partition 7, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:11 INFO TaskSetManager: Finished task 3.0 in stage 3.0 (TID 18) in 9557 ms on 192.168.33.24 (executor 0) (4/13)
+18/07/08 12:49:20 INFO TaskSetManager: Starting task 8.0 in stage 3.0 (TID 23, 192.168.33.24, executor 0, partition 8, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:20 INFO TaskSetManager: Finished task 6.0 in stage 3.0 (TID 21) in 9577 ms on 192.168.33.24 (executor 0) (5/13)
+18/07/08 12:49:20 INFO TaskSetManager: Starting task 9.0 in stage 3.0 (TID 24, 192.168.33.24, executor 0, partition 9, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:20 INFO TaskSetManager: Finished task 4.0 in stage 3.0 (TID 19) in 9842 ms on 192.168.33.24 (executor 0) (6/13)
+18/07/08 12:49:20 INFO TaskSetManager: Starting task 10.0 in stage 3.0 (TID 25, 192.168.33.24, executor 0, partition 10, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:20 INFO TaskSetManager: Finished task 7.0 in stage 3.0 (TID 22) in 9422 ms on 192.168.33.24 (executor 0) (7/13)
+18/07/08 12:49:21 INFO TaskSetManager: Starting task 11.0 in stage 3.0 (TID 26, 192.168.33.24, executor 0, partition 11, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:21 INFO TaskSetManager: Finished task 5.0 in stage 3.0 (TID 20) in 10401 ms on 192.168.33.24 (executor 0) (8/13)
+18/07/08 12:49:31 INFO TaskSetManager: Starting task 12.0 in stage 3.0 (TID 27, 192.168.33.24, executor 0, partition 12, PROCESS_LOCAL, 8536 bytes)
+18/07/08 12:49:31 INFO TaskSetManager: Finished task 10.0 in stage 3.0 (TID 25) in 10235 ms on 192.168.33.24 (executor 0) (9/13)
+18/07/08 12:49:31 INFO TaskSetManager: Finished task 9.0 in stage 3.0 (TID 24) in 10777 ms on 192.168.33.24 (executor 0) (10/13)
+18/07/08 12:49:31 INFO TaskSetManager: Finished task 8.0 in stage 3.0 (TID 23) in 11124 ms on 192.168.33.24 (executor 0) (11/13)
+18/07/08 12:49:32 INFO TaskSetManager: Finished task 11.0 in stage 3.0 (TID 26) in 10867 ms on 192.168.33.24 (executor 0) (12/13)
+18/07/08 12:49:35 INFO TaskSetManager: Finished task 12.0 in stage 3.0 (TID 27) in 4768 ms on 192.168.33.24 (executor 0) (13/13)
+18/07/08 12:49:35 INFO TaskSchedulerImpl: Removed TaskSet 3.0, whose tasks have all completed, from pool 
+18/07/08 12:49:35 INFO DAGScheduler: ResultStage 3 (saveAsTextFile at LoadData.scala:169) finished in 33.980 s
+18/07/08 12:49:35 INFO DAGScheduler: Job 3 finished: saveAsTextFile at LoadData.scala:169, took 34.069448 s
+18/07/08 12:49:36 INFO SparkUI: Stopped Spark web UI at http://192.168.33.24:4040
+18/07/08 12:49:36 INFO StandaloneSchedulerBackend: Shutting down all executors
+18/07/08 12:49:36 INFO CoarseGrainedSchedulerBackend$DriverEndpoint: Asking each executor to shut down
+18/07/08 12:49:36 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+18/07/08 12:49:36 INFO MemoryStore: MemoryStore cleared
+18/07/08 12:49:36 INFO BlockManager: BlockManager stopped
+18/07/08 12:49:36 INFO BlockManagerMaster: BlockManagerMaster stopped
+18/07/08 12:49:36 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+18/07/08 12:49:36 INFO SparkContext: Successfully stopped SparkContext
+DataFrame load took 77157 msec., saving as text file took:34407 msec. to file:results___1531043341594.txt, used partitions number:13, defaultParallelism:4
+18/07/08 12:49:36 INFO ShutdownHookManager: Shutdown hook called
+18/07/08 12:49:36 INFO ShutdownHookManager: Deleting directory /tmp/spark-599cf48d-b474-4fe0-8e82-fbdcc3cf0196
+
