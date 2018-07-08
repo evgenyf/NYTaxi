@@ -1,11 +1,12 @@
-1. Download InsightEdge zip file, this project now is using InsightEdge 2.1 GA for measurement purposes
-2. Then go to sbin directory, define number of workers ( by using environment variable SPARK_WORKER_INSTANCES ) and run InsightEdge in demo mode: export SPARK_WORKER_INSTANCES=4 and then ./insightedge.sh --mode demo
-3. gs-ui can be run in order to check that everything is running properly
-4. Now submit LoadData by running following command from bin directory ( 1st parameter is list of csv file to load delimetered by comma, the 2nd parameter is using parallelism number ):
+1. First of all run mv clean install on project, as result ja file [MyNYTaxi_PROJECT_LOCATION]/target/nytaxi-1.1.0-SNAPSHOT.jar will be created
+2. Download InsightEdge zip file, this project now is using InsightEdge 2.1 GA for measurement purposes
+3. Then go to sbin directory, define number of workers ( by using environment variable SPARK_WORKER_INSTANCES ) and run InsightEdge in demo mode: export SPARK_WORKER_INSTANCES=4 and then ./insightedge.sh --mode demo
+4. gs-ui can be run in order to check that everything is running properly
+5. Now submit LoadData by running following command from bin directory ( 1st parameter is list of csv file to load delimetered by comma, the 2nd parameter is using parallelism number ):
     ./insightedge-submit --class nyctaxi.LoadData --master spark://127.0.0.1:7077 [MyNYTaxi_PROJECT_LOCATION]/target/nytaxi-1.1.0-SNAPSHOT.jar [NYTaxi_CSVS_FILES_LOCATION]/yellow_tripdata_2016-01.csv 4
-5. Pease verify in gs-ui space has nyctaxi.TaxiTripData objects
-5. Load time result must be taken from following place in log:
+6. Pease verify in gs-ui space has nyctaxi.TaxiTripData objects
+7. Load time result must be taken from following place in log:
     DataFrame load took 77157 msec.
-7. Now submit ReadData by running following command from bin directory: ./insightedge-submit --class nyctaxi.ReadData --master spark://127.0.0.1:7077 [MyNYTaxi_PROJECT_LOCATION]/target/nytaxi-1.1.0-SNAPSHOT.jar
-8. Write time result must be taken from following place in log:
+8. Now submit ReadData by running following command from bin directory: ./insightedge-submit --class nyctaxi.ReadData --master spark://127.0.0.1:7077 [MyNYTaxi_PROJECT_LOCATION]/target/nytaxi-1.1.0-SNAPSHOT.jar
+9. Write time result must be taken from following place in log:
     DataFrame load took 31198 msec.
