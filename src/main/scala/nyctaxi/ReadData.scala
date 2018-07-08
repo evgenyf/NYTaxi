@@ -33,16 +33,24 @@ object ReadData {
   //first parameter is link to csv file
   def main(args: Array[String]): Unit = {
 
-    val settings = if (args.length > 0) args else Array("spark://127.0.0.1:7077", "insightedge-space", "insightedge", "127.0.0.1:4174")
-    if (settings.length < 4) {
-      System.err.println("Usage: LoadDataFrame <spark master url> <space name> <space groups> <space locator>, first parameter must be url to csv file")
+    val settings = if (args.length > 1) args else Array("spark://127.0.0.1:7077", "insightedge-space", "insightedge", "127.0.0.1:4174", "n/a")
+    if (settings.length < 5) {
+      System.err.println("Usage: ReadDataFrame <spark master url> <space name> <space groups> <space locator>")
       System.exit(1)
     }
     val Array(master, space, groups, locators) = settings.slice( 0, 4 )
     val ieConfig = InsightEdgeConfig(space, Some(groups), Some(locators))
 
     val conf = new SparkConf().setMaster(master).setAppName("NYC taxi - reader")
+
+    if (args.length > 1) {
+      println("Setting [spark.default.parallelism] :" + args(0))
+      conf.set("spark.default.parallelism", args(0))
+    }
+
     val sc = new SparkContext(conf)
+    val defaultParallelism = sc.defaultParallelism
+
     val sparkSession = SparkSession.builder
       .config(conf = conf)
       .appName("Taxi")
@@ -80,7 +88,7 @@ object ReadData {
 
     sparkSession.stopInsightEdgeContext()
 
-    println( "DataFrame load took " + ( endTime - startTime ) + " msec." )
+    println( "DataFrame load took " + ( endTime - startTime ) + " msec." + ", defaultParallelism:" + defaultParallelism )
   }
 
   def retrieveMostRushHours( taxiTripDataDf : DataFrame, rushHoursCount: Integer ): util.ArrayList[Integer] ={
